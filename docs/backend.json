@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores basic information for clients and drivers.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "driver"] },
+        "avatar": { "type": "string" }
+      },
+      "required": ["id", "name", "role"]
+    },
+    "DriverStatus": {
+      "title": "Driver Status",
+      "description": "Real-time location and availability of drivers.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
+        "isAvailable": { "type": "boolean" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ServiceRequest": {
+      "title": "Service Request",
+      "description": "Details of a security transport request.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "clientId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["awaiting", "en_route", "arrived", "in_progress", "completed", "cancelled"]
+        },
+        "destination": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["google.com", "password"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "The user's profile information."
+    },
+    "/driverStatuses/{driverId}": {
+      "schema": "DriverStatus",
+      "description": "Real-time driver location and status."
+    },
+    "/requests/{requestId}": {
+      "schema": "ServiceRequest",
+      "description": "Service requests created by clients."
+    }
+  }
+}
