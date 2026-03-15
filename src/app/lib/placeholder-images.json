@@ -1,0 +1,29 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-safety",
+      "description": "A reliable professional security or transport service visual",
+      "imageUrl": "https://picsum.photos/seed/angel1/1200/800",
+      "imageHint": "security transport"
+    },
+    {
+      "id": "driver-avatar-1",
+      "description": "Professional driver profile",
+      "imageUrl": "https://picsum.photos/seed/driver1/150/150",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "driver-avatar-2",
+      "description": "Professional driver profile",
+      "imageUrl": "https://picsum.photos/seed/driver2/150/150",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "map-placeholder",
+      "description": "A clean modern map interface",
+      "imageUrl": "https://picsum.photos/seed/map/800/600",
+      "imageHint": "city map"
+    }
+  ]
+}
