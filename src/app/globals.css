@@ -5,47 +5,26 @@
 
 @layer base {
   :root {
-    /* Primary: #2D598F (Cadet Blue) -> hsl(213, 52%, 37%) */
-    --background: 198 25% 94%; /* #EBF1F4 Off-white background */
-    --foreground: 213 52% 15%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 213 52% 15%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 213 52% 15%;
-    --primary: 213 52% 37%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 198 25% 88%;
-    --secondary-foreground: 213 52% 25%;
-    --muted: 198 25% 88%;
-    --muted-foreground: 213 20% 45%;
-    /* Accent: #7566FF (Royal Purple) -> hsl(246, 100%, 70%) */
-    --accent: 246 100% 70%;
-    --accent-foreground: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 213 20% 85%;
-    --input: 213 20% 85%;
-    --ring: 246 100% 70%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
     --radius: 0.75rem;
-  }
-  .dark {
-    --background: 213 52% 5%;
-    --foreground: 0 0% 98%;
-    --card: 213 52% 7%;
-    --card-foreground: 0 0% 98%;
-    --popover: 213 52% 7%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 213 52% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 213 30% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 213 30% 15%;
-    --muted-foreground: 213 10% 65%;
-    --accent: 246 100% 75%;
-    --accent-foreground: 0 0% 100%;
-    --border: 213 30% 20%;
-    --input: 213 30% 20%;
-    --ring: 246 100% 75%;
   }
 }
 
@@ -54,6 +33,10 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at center, #1a2c42 0%, #0a111a 100%);
 }
