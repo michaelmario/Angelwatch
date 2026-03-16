@@ -6,6 +6,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
   :root {
     --background: 210 40% 98%;
@@ -36,7 +37,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
   }
 }
 
@@ -50,4 +51,14 @@
 
 .section-animate.visible {
   @apply opacity-100 translate-y-0;
+}
+
+/* Optimisation pour les encoches (safe-area) sur mobile */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
 }
