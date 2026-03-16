@@ -1,11 +1,12 @@
 
-export type UserRole = 'client' | 'driver';
+export type UserRole = 'client' | 'driver' | 'admin';
 
 export interface UserProfile {
   id: string;
   name: string;
   role: UserRole;
   avatar?: string;
+  email?: string;
 }
 
 export interface Location {

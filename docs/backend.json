@@ -1,13 +1,15 @@
+
 {
   "entities": {
     "UserProfile": {
       "title": "User Profile",
-      "description": "Stores basic information for clients and drivers.",
+      "description": "Stores basic information for clients, drivers, and admins.",
       "type": "object",
       "properties": {
         "id": { "type": "string" },
         "name": { "type": "string" },
-        "role": { "type": "string", "enum": ["client", "driver"] },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "driver", "admin"] },
         "avatar": { "type": "string" }
       },
       "required": ["id", "name", "role"]

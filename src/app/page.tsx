@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -7,15 +8,23 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Mic, Ban, Handshake, MapPin, Navigation, Twitter, Linkedin, Instagram, Menu, ChevronRight } from 'lucide-react';
+import { Shield, Mic, Ban, Handshake, MapPin, Navigation, Twitter, Linkedin, Instagram, Menu, ChevronRight, Settings } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useUser, useDoc, useFirestore } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import { UserProfile } from '@/lib/types';
 
 const logoData = PlaceHolderImages.find(img => img.id === 'angelwatch-logo');
 
 export default function LandingPage() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  const { db } = useFirestore();
+  const { user: authUser } = useUser();
+  const profileRef = authUser ? doc(db, 'users', authUser.uid) : null;
+  const { data: userProfile } = useDoc<UserProfile>(profileRef);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +87,14 @@ export default function LandingPage() {
                 {link.name}
               </Link>
             ))}
+            {userProfile?.role === 'admin' && (
+              <Link 
+                href="/admin" 
+                className="text-[10px] font-bold text-accent uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1.5"
+              >
+                <Settings className="w-3 h-3" /> Admin
+              </Link>
+            )}
             <Button size="sm" className="bg-accent hover:bg-accent/90 text-white font-bold text-[10px] uppercase tracking-widest px-6 h-10 rounded-full" asChild>
               <Link href="/auth">Connexion</Link>
             </Button>
@@ -104,6 +121,14 @@ export default function LandingPage() {
                       {link.name}
                     </Link>
                   ))}
+                  {userProfile?.role === 'admin' && (
+                    <Link 
+                      href="/admin" 
+                      className="text-lg font-bold uppercase tracking-widest text-accent hover:text-white transition-colors flex items-center gap-2"
+                    >
+                      <Settings className="w-5 h-5" /> Console Admin
+                    </Link>
+                  )}
                   <Button className="bg-accent hover:bg-accent/90 text-white font-bold w-full mt-4 h-14 rounded-xl" asChild>
                     <Link href="/auth">Accès Membre</Link>
                   </Button>
@@ -320,6 +345,9 @@ export default function LandingPage() {
               <Link key={link.name} href={link.href} className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-colors">{link.name}</Link>
             ))}
             <Link href="/auth" className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Connexion</Link>
+            {userProfile?.role === 'admin' && (
+              <Link href="/admin" className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:text-white transition-colors">Administration</Link>
+            )}
           </nav>
           <div className="flex gap-8">
             <Link href="#" className="p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Twitter className="w-6 h-6" /></Link>
