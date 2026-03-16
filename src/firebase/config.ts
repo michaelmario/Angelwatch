@@ -2,14 +2,14 @@
 
 /**
  * @fileOverview Configuration Firebase.
- * Les variables sont lues depuis le fichier .env via process.env.
+ * Identifiants de connexion au projet AngelWatch fournis par l'utilisateur.
  */
 
 export const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyD1FbnbT771Afn_STRxI_W-XQmTamz3D1U",
+  authDomain: "studio-3600623762-e3e01.firebaseapp.com",
+  projectId: "studio-3600623762-e3e01",
+  storageBucket: "studio-3600623762-e3e01.firebasestorage.app",
+  messagingSenderId: "765251606198",
+  appId: "1:765251606198:web:3997f9f32963959a76b817",
 };
