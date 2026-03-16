@@ -8,7 +8,23 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Mic, Ban, Handshake, MapPin, Navigation, Twitter, Linkedin, Instagram, Menu, ChevronRight, Settings } from 'lucide-react';
+import { 
+  Shield, 
+  Mic, 
+  Ban, 
+  Handshake, 
+  MapPin, 
+  Navigation, 
+  Twitter, 
+  Linkedin, 
+  Instagram, 
+  Menu, 
+  ChevronRight, 
+  Settings,
+  Mail,
+  Phone,
+  Clock as ClockIcon
+} from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useUser, useDoc, useFirestore } from '@/firebase';
@@ -54,6 +70,7 @@ export default function LandingPage() {
     { name: "Actions", href: "#actions" },
     { name: "Suivi Live", href: "#suivi" },
     { name: "Rejoindre", href: "#rejoindre" },
+    { name: "Réservation", href: "#reservation" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -266,7 +283,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Forms */}
+      {/* Rejoindre Form */}
       <section id="rejoindre" className="py-24 bg-slate-50 section-animate">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16 space-y-4">
@@ -297,7 +314,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="contact" className="py-24 bg-white section-animate">
+      {/* Reservation Form */}
+      <section id="reservation" className="py-24 bg-white section-animate">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-3xl md:text-5xl font-extrabold text-[#0a111a]">Besoin d'un Ange ?</h2>
@@ -320,6 +338,94 @@ export default function LandingPage() {
               </div>
             </div>
             <p className="text-center text-slate-500 text-[10px] tracking-[0.3em] uppercase relative z-10">Service disponible 24/7 pour votre sécurité</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact & Map Section */}
+      <section id="contact" className="py-24 bg-slate-50 section-animate">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            {/* Contact Form & Info */}
+            <div className="space-y-12">
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-5xl font-extrabold text-[#0a111a] tracking-tight">Nous Contacter</h2>
+                <p className="text-slate-500 text-lg leading-relaxed">
+                  Une question ? Un partenariat ? Notre équipe est à votre écoute pour assurer votre sécurité et celle de vos proches.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#0a111a] text-sm uppercase tracking-wider">Téléphone</h4>
+                    <p className="text-slate-500">+262 692 00 00 00</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#0a111a] text-sm uppercase tracking-wider">Email</h4>
+                    <p className="text-slate-500">contact@angelwatch.re</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#0a111a] text-sm uppercase tracking-wider">Siège Social</h4>
+                    <p className="text-slate-500">Av. Du 14 Juillet 1789<br />Le Port 97420, La Réunion</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-accent/10 rounded-xl text-accent">
+                    <ClockIcon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[#0a111a] text-sm uppercase tracking-wider">Horaires</h4>
+                    <p className="text-slate-500">24/7 Service Intervention</p>
+                  </div>
+                </div>
+              </div>
+
+              <Card className="border-none shadow-xl rounded-3xl bg-white overflow-hidden">
+                <CardContent className="p-8 space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Input placeholder="Votre Nom" className="h-14 bg-slate-50 border-none rounded-xl" />
+                    <Input placeholder="Votre Email" className="h-14 bg-slate-50 border-none rounded-xl" />
+                  </div>
+                  <Input placeholder="Sujet" className="h-14 bg-slate-50 border-none rounded-xl" />
+                  <Textarea placeholder="Votre message..." className="min-h-[120px] bg-slate-50 border-none rounded-xl p-4 resize-none" />
+                  <Button className="w-full h-14 bg-[#0a111a] hover:bg-[#1a2c42] text-white font-bold rounded-xl uppercase tracking-widest text-xs">
+                    Envoyer le message
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Map Section */}
+            <div className="relative h-[600px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white group">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14905.377022798384!2d55.297597287324834!3d-20.938685941689126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2182888a843b7097%3A0x5fae8eaaa5fb78e3!2sAv.%20Du%2014%20Juillet%201789%2C%20Le%20Port%2097420%2C%20La%20R%C3%A9union!5e0!3m2!1sfr!2sfr!4v1773650547018!5m2!1sfr!2sfr" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen={true} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="grayscale opacity-80 contrast-125 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+              />
+              <div className="absolute top-6 left-6 bg-[#0a111a] text-white px-6 py-4 rounded-2xl shadow-2xl border border-white/10 backdrop-blur-md">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-accent mb-1">Notre Localisation</p>
+                <p className="text-sm font-bold">AngelWatch Hub Réunion</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
