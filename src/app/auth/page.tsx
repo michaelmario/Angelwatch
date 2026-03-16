@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Shield, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2, ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,6 +12,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+
+const AngelLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <path d="M35 20C20 10 5 15 2 25C10 24 25 25 35 20Z" fill="currentColor" />
+    <path d="M65 20C80 10 95 15 98 25C90 24 75 25 65 20Z" fill="currentColor" />
+    <path d="M50 12L56 18V28L50 34L44 28V18L50 12Z" fill="currentColor" />
+  </svg>
+);
 
 export default function AuthPage() {
   const { auth } = useAuth();
@@ -56,8 +64,6 @@ export default function AuthPage() {
         message = "Email ou mot de passe incorrect.";
       } else if (error.code === 'auth/email-already-in-use') {
         message = "Cet email est déjà utilisé.";
-      } else if (error.code === 'auth/weak-password') {
-        message = "Le mot de passe est trop court.";
       }
 
       toast({
@@ -71,98 +77,88 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4 md:p-6 bg-slate-50 min-h-screen">
-      <Link href="/" className="flex items-center gap-2 mb-8 group">
-        <div className="bg-[#0a111a] p-2.5 rounded-xl group-hover:scale-110 transition-transform shadow-lg">
-          <Shield className="w-6 h-6 text-accent" />
-        </div>
-        <span className="text-xl md:text-2xl font-bold text-[#0a111a] tracking-tight uppercase">AngelWatch</span>
+    <div className="flex-1 flex flex-col items-center justify-center p-6 bg-slate-50 min-h-screen">
+      <Link href="/" className="flex items-center gap-3 mb-10 group">
+        <AngelLogo className="w-16 h-16 text-[#0a111a] group-hover:scale-110 transition-transform" />
+        <span className="text-2xl font-black text-[#0a111a] tracking-tighter uppercase">AngelWatch</span>
       </Link>
 
-      <Card className="w-full max-w-md border-none shadow-2xl rounded-[1.5rem] md:rounded-3xl overflow-hidden bg-white mx-4">
+      <Card className="w-full max-w-md border-none shadow-[0_32px_64px_-12px_rgba(0,0,0,0.1)] rounded-[2.5rem] overflow-hidden bg-white">
         <Tabs defaultValue="client" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 rounded-none h-14 bg-slate-100">
-            <TabsTrigger value="client" className="data-[state=active]:bg-white data-[state=active]:text-[#0a111a] font-bold text-[10px] md:text-xs uppercase tracking-widest">Client</TabsTrigger>
-            <TabsTrigger value="driver" className="data-[state=active]:bg-white data-[state=active]:text-accent font-bold text-[10px] md:text-xs uppercase tracking-widest">Chauffeur</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 rounded-none h-16 bg-slate-100 p-0">
+            <TabsTrigger value="client" className="data-[state=active]:bg-white data-[state=active]:text-[#0a111a] font-bold text-xs uppercase tracking-[0.2em] rounded-none">Client</TabsTrigger>
+            <TabsTrigger value="driver" className="data-[state=active]:bg-white data-[state=active]:text-accent font-bold text-xs uppercase tracking-[0.2em] rounded-none">Chauffeur</TabsTrigger>
           </TabsList>
           
-          <div className="p-6 md:p-8">
-            <TabsContent value="client" className="mt-0 space-y-6 animate-in fade-in duration-500">
-              <div className="space-y-2 text-center">
-                <h1 className="text-xl md:text-2xl font-bold text-[#0a111a]">{isRegistering ? 'Rejoindre AngelWatch' : 'Espace Client'}</h1>
-                <p className="text-muted-foreground text-xs md:text-sm">Sécurisez vos trajets nocturnes dès maintenant.</p>
+          <div className="p-8 md:p-12">
+            <TabsContent value="client" className="mt-0 space-y-8 animate-in fade-in duration-500">
+              <div className="space-y-3 text-center">
+                <h1 className="text-2xl font-bold text-[#0a111a]">{isRegistering ? 'Rejoindre AngelWatch' : 'Espace Client'}</h1>
+                <p className="text-slate-400 text-sm">Sécurisez vos trajets nocturnes dès maintenant.</p>
               </div>
 
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
-                    <Input 
-                      type="email" 
-                      placeholder="Email" 
-                      className="pl-10 h-12 rounded-xl bg-slate-50 border-slate-200" 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
+                <div className="relative">
+                  <Mail className="absolute left-5 top-5 w-5 h-5 text-slate-300" />
+                  <Input 
+                    type="email" 
+                    placeholder="Email" 
+                    className="pl-14 h-16 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-accent/20 text-base" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
-                    <Input 
-                      type="password" 
-                      placeholder="Mot de passe" 
-                      className="pl-10 h-12 rounded-xl bg-slate-50 border-slate-200" 
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
+                <div className="relative">
+                  <Lock className="absolute left-5 top-5 w-5 h-5 text-slate-300" />
+                  <Input 
+                    type="password" 
+                    placeholder="Mot de passe" 
+                    className="pl-14 h-16 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-accent/20 text-base" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
                 <Button 
-                  className="w-full h-12 bg-[#0a111a] hover:bg-[#1a2c42] text-white font-bold rounded-xl uppercase tracking-widest text-[10px]"
+                  className="w-full h-16 bg-[#0a111a] hover:bg-[#1a2c42] text-white font-bold rounded-2xl uppercase tracking-[0.2em] text-[10px] mt-2 shadow-xl"
                   disabled={loading}
                   onClick={() => handleAuth('client')}
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                  {isRegistering ? "Créer mon compte client" : "Se connecter en tant que Client"} 
+                  {isRegistering ? "Créer mon compte client" : "Se connecter"} 
                   {!loading && <ArrowRight className="ml-2 w-4 h-4" />}
                 </Button>
               </div>
             </TabsContent>
 
-            <TabsContent value="driver" className="mt-0 space-y-6 animate-in fade-in duration-500">
-              <div className="space-y-2 text-center">
-                <h1 className="text-xl md:text-2xl font-bold text-[#0a111a]">{isRegistering ? 'Devenir un Ange' : 'Portail Chauffeur'}</h1>
-                <p className="text-muted-foreground text-xs md:text-sm">Connectez-vous pour commencer votre mission.</p>
+            <TabsContent value="driver" className="mt-0 space-y-8 animate-in fade-in duration-500">
+              <div className="space-y-3 text-center">
+                <h1 className="text-2xl font-bold text-[#0a111a]">{isRegistering ? 'Devenir un Ange' : 'Portail Chauffeur'}</h1>
+                <p className="text-slate-400 text-sm">Connectez-vous pour commencer votre mission.</p>
               </div>
 
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
-                    <Input 
-                      type="email" 
-                      placeholder="Identifiant Chauffeur ou Email" 
-                      className="pl-10 h-12 rounded-xl bg-slate-50 border-slate-200" 
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
+                <div className="relative">
+                  <Mail className="absolute left-5 top-5 w-5 h-5 text-slate-300" />
+                  <Input 
+                    type="email" 
+                    placeholder="Email professionnel" 
+                    className="pl-14 h-16 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-accent/20 text-base" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
-                <div className="space-y-2">
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3.5 w-4 h-4 text-slate-400" />
-                    <Input 
-                      type="password" 
-                      placeholder="Mot de passe" 
-                      className="pl-10 h-12 rounded-xl bg-slate-50 border-slate-200" 
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
+                <div className="relative">
+                  <Lock className="absolute left-5 top-5 w-5 h-5 text-slate-300" />
+                  <Input 
+                    type="password" 
+                    placeholder="Mot de passe" 
+                    className="pl-14 h-16 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-accent/20 text-base" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
                 <Button 
-                  className="w-full h-12 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl uppercase tracking-widest text-[10px] shadow-lg"
+                  className="w-full h-16 bg-accent hover:bg-accent/90 text-white font-bold rounded-2xl uppercase tracking-[0.2em] text-[10px] mt-2 shadow-xl"
                   disabled={loading}
                   onClick={() => handleAuth('driver')}
                 >
@@ -176,12 +172,17 @@ export default function AuthPage() {
         </Tabs>
       </Card>
 
-      <button 
-        className="mt-8 text-xs md:text-sm text-slate-500 hover:text-[#0a111a] font-medium transition-colors mb-8"
-        onClick={() => setIsRegistering(!isRegistering)}
-      >
-        {isRegistering ? "Déjà un compte ? Connectez-vous" : "Pas encore de compte ? S'enregistrer ici"}
-      </button>
+      <div className="mt-10 flex flex-col items-center gap-4">
+        <button 
+          className="text-sm text-slate-500 hover:text-[#0a111a] font-bold transition-colors uppercase tracking-widest"
+          onClick={() => setIsRegistering(!isRegistering)}
+        >
+          {isRegistering ? "Déjà un compte ? Connexion" : "Pas encore de compte ? S'enregistrer"}
+        </button>
+        <Link href="/" className="text-xs text-slate-400 flex items-center gap-1 hover:text-[#0a111a] transition-colors">
+          <ChevronLeft className="w-3 h-3" /> Retour à l'accueil
+        </Link>
+      </div>
     </div>
   );
 }

@@ -8,8 +8,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Mic, Ban, Handshake, MapPin, Navigation, Twitter, Linkedin, Instagram, Menu, X } from 'lucide-react';
+import { Shield, Mic, Ban, Handshake, MapPin, Navigation, Twitter, Linkedin, Instagram, Menu, ChevronRight } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+
+const AngelLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    {/* Aile Gauche */}
+    <path d="M35 20C20 10 5 15 2 25C10 24 25 25 35 20Z" fill="currentColor" />
+    <path d="M32 23C20 16 8 20 5 28C15 27 25 28 32 23Z" fill="currentColor" opacity="0.7" />
+    <path d="M29 26C20 22 12 25 10 31C18 30 25 31 29 26Z" fill="currentColor" opacity="0.4" />
+    {/* Aile Droite */}
+    <path d="M65 20C80 10 95 15 98 25C90 24 75 25 65 20Z" fill="currentColor" />
+    <path d="M68 23C80 16 92 20 95 28C85 27 75 28 68 23Z" fill="currentColor" opacity="0.7" />
+    <path d="M71 26C80 22 88 25 90 31C82 30 75 31 71 26Z" fill="currentColor" opacity="0.4" />
+    {/* Centre (Bouclier/Moto) */}
+    <path d="M50 12L56 18V28L50 34L44 28V18L50 12Z" fill="currentColor" />
+    <circle cx="50" cy="23" r="3" fill="white" fillOpacity="0.2" />
+  </svg>
+);
 
 export default function LandingPage() {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -48,14 +64,12 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Header - Dynamique et Responsive */}
+      {/* Header */}
       <header className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 transition-all duration-300 ${isScrolled ? 'bg-[#0a111a]/95 backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="bg-primary p-2 rounded-xl">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white tracking-tight uppercase">AngelWatch</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <AngelLogo className="w-12 h-12 text-accent group-hover:scale-110 transition-transform" />
+            <span className="text-xl font-extrabold text-white tracking-tighter uppercase">AngelWatch</span>
           </Link>
 
           {/* Nav Desktop */}
@@ -69,7 +83,7 @@ export default function LandingPage() {
                 {link.name}
               </Link>
             ))}
-            <Button size="sm" className="bg-accent hover:bg-accent/90 text-white font-bold text-[10px] uppercase tracking-widest px-6" asChild>
+            <Button size="sm" className="bg-accent hover:bg-accent/90 text-white font-bold text-[10px] uppercase tracking-widest px-6 h-10 rounded-full" asChild>
               <Link href="/auth">Connexion</Link>
             </Button>
           </nav>
@@ -95,7 +109,7 @@ export default function LandingPage() {
                       {link.name}
                     </Link>
                   ))}
-                  <Button className="bg-accent hover:bg-accent/90 text-white font-bold w-full mt-4" asChild>
+                  <Button className="bg-accent hover:bg-accent/90 text-white font-bold w-full mt-4 h-14 rounded-xl" asChild>
                     <Link href="/auth">Accès Membre</Link>
                   </Button>
                 </nav>
@@ -105,75 +119,79 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Hero Section - Optimisée Mobile */}
-      <section className="relative hero-gradient min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20">
-        <div className="max-w-4xl space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-          <div className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-widest mb-2">
+      {/* Hero Section */}
+      <section className="relative hero-gradient min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+          <div className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-widest">
             Engagement Officiel & Sécurité Routière
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-white leading-[1.1]">
-            AngelWatch : La sécurité <br className="hidden md:block" />
-            routière, notre engagement.
-          </h1>
-          <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-medium px-4">
-            La technologie au service de la bienveillance. Ne laissez plus la route décider pour vous lors de vos soirées.
+          <div className="flex flex-col items-center gap-4">
+             <AngelLogo className="w-24 h-24 md:w-32 md:h-32 text-white" />
+             <h1 className="text-4xl sm:text-5xl md:text-8xl font-extrabold text-white leading-tight tracking-tighter">
+              AngelWatch
+            </h1>
+          </div>
+          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-medium">
+            La sécurité routière, notre engagement. <br className="hidden md:block" />
+            La technologie au service de la bienveillance.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 px-4">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-white px-8 h-14 rounded-md text-sm font-bold shadow-xl group w-full sm:w-auto" asChild>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+            <Button size="lg" className="bg-accent hover:bg-accent/90 text-white px-8 h-16 rounded-xl text-sm font-bold shadow-2xl group w-full sm:w-auto uppercase tracking-widest" asChild>
               <Link href="/auth">
-                <Navigation className="w-4 h-4 mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> 
-                Demander un Ange
+                Demander un Ange <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10 px-8 h-14 rounded-md text-sm font-bold w-full sm:w-auto" asChild>
+            <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10 px-8 h-16 rounded-xl text-sm font-bold w-full sm:w-auto uppercase tracking-widest" asChild>
               <Link href="/auth">Devenir Chauffeur</Link>
             </Button>
           </div>
         </div>
         
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20">
+            <div className="w-1 h-12 bg-white rounded-full" />
+        </div>
       </section>
 
-      {/* Actions Section - Responsive Grid */}
-      <section id="actions" className="py-20 md:py-32 bg-background section-animate">
+      {/* Actions Section */}
+      <section id="actions" className="py-24 bg-white section-animate">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="space-y-4 mb-16 md:mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary">Nos Actions de Prévention</h2>
-            <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
+          <div className="space-y-4 mb-20">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-[#0a111a] tracking-tight">Nos Actions de Prévention</h2>
+            <div className="w-24 h-1.5 bg-accent mx-auto rounded-full" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <Card className="border-none shadow-sm hover:shadow-xl transition-all group bg-white/50 backdrop-blur-sm">
-              <CardContent className="p-8 md:p-10 space-y-6 flex flex-col items-center text-center">
-                <div className="p-5 rounded-2xl bg-accent/5 text-accent group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500">
-                  <Mic className="w-10 h-10" />
+            <Card className="border-none shadow-xl hover:shadow-2xl transition-all group bg-slate-50 rounded-3xl overflow-hidden">
+              <CardContent className="p-10 space-y-6 flex flex-col items-center">
+                <div className="p-6 rounded-3xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500">
+                  <Mic className="w-12 h-12" />
                 </div>
-                <h3 className="font-bold text-xl">Campagnes de Sensibilisation</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Des interventions sur le terrain pour rappeler que l'amitié sauve des vies en fin de soirée.
+                <h3 className="font-bold text-2xl text-[#0a111a]">Sensibilisation</h3>
+                <p className="text-slate-500 text-base leading-relaxed">
+                  Interventions terrain pour rappeler que l'amitié sauve des vies en fin de soirée.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-sm hover:shadow-xl transition-all group bg-white/50 backdrop-blur-sm">
-              <CardContent className="p-8 md:p-10 space-y-6 flex flex-col items-center text-center">
-                <div className="p-5 rounded-2xl bg-red-50 text-red-500 group-hover:scale-110 group-hover:bg-red-500 group-hover:text-white transition-all duration-500">
-                  <Ban className="w-10 h-10" />
+            <Card className="border-none shadow-xl hover:shadow-2xl transition-all group bg-slate-50 rounded-3xl overflow-hidden">
+              <CardContent className="p-10 space-y-6 flex flex-col items-center text-center">
+                <div className="p-6 rounded-3xl bg-red-50 text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all duration-500">
+                  <Ban className="w-12 h-12" />
                 </div>
-                <h3 className="font-bold text-xl">Stop Alcool au Volant</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Une logistique infaillible pour garantir qu'aucun conducteur inapte ne reprenne la route.
+                <h3 className="font-bold text-2xl text-[#0a111a]">Stop Alcool au Volant</h3>
+                <p className="text-slate-500 text-base leading-relaxed">
+                  Logistique infaillible pour garantir qu'aucun conducteur inapte ne reprenne la route.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-none shadow-sm hover:shadow-xl transition-all group bg-white/50 backdrop-blur-sm">
-              <CardContent className="p-8 md:p-10 space-y-6 flex flex-col items-center text-center">
-                <div className="p-5 rounded-2xl bg-accent/5 text-accent group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500">
-                  <Handshake className="w-10 h-10" />
+            <Card className="border-none shadow-xl hover:shadow-2xl transition-all group bg-slate-50 rounded-3xl overflow-hidden">
+              <CardContent className="p-10 space-y-6 flex flex-col items-center text-center">
+                <div className="p-6 rounded-3xl bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500">
+                  <Handshake className="w-12 h-12" />
                 </div>
-                <h3 className="font-bold text-xl">Partenariats Événementiels</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Présence sur les festivals et soirées pour un retour sécurisé systématique de vos véhicules.
+                <h3 className="font-bold text-2xl text-[#0a111a]">Partenariats Soirées</h3>
+                <p className="text-slate-500 text-base leading-relaxed">
+                  Présence sur festivals pour un retour sécurisé systématique de vos véhicules.
                 </p>
               </CardContent>
             </Card>
@@ -181,71 +199,71 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Live Tracking - Responsive Layout */}
-      <section id="suivi" className="py-20 md:py-32 bg-[#0a111a] text-white section-animate overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="space-y-6 md:space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">Interface de <br className="hidden md:block" /> Tracking Live</h2>
-            <p className="text-slate-400 text-base md:text-lg leading-relaxed">
+      {/* Live Tracking */}
+      <section id="suivi" className="py-24 bg-[#0a111a] text-white section-animate">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="space-y-10">
+            <h2 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tighter">Interface de <br /> Tracking Live</h2>
+            <p className="text-slate-400 text-xl leading-relaxed">
               Suivez en temps réel la position de votre Ange et l'état du rapatriement de votre véhicule via notre application intelligente.
             </p>
-            <ul className="space-y-4 md:space-y-6">
-              <li className="flex items-center gap-4 text-slate-300">
-                <div className="p-2 rounded-lg bg-accent/20">
-                  <MapPin className="w-5 h-5 text-accent" />
+            <div className="space-y-6">
+              <div className="flex items-center gap-6 group">
+                <div className="p-4 rounded-2xl bg-accent/20 group-hover:bg-accent transition-colors">
+                  <MapPin className="w-6 h-6 text-accent group-hover:text-white" />
                 </div>
-                Géolocalisation précise par satellite
-              </li>
-              <li className="flex items-center gap-4 text-slate-300">
-                <div className="p-2 rounded-lg bg-accent/20">
-                  <Navigation className="w-5 h-5 text-accent" />
+                <span className="text-lg font-semibold">Géolocalisation précise par satellite</span>
+              </div>
+              <div className="flex items-center gap-6 group">
+                <div className="p-4 rounded-2xl bg-accent/20 group-hover:bg-accent transition-colors">
+                  <Navigation className="w-6 h-6 text-accent group-hover:text-white" />
                 </div>
-                Estimation d'arrivée temps réel (ETA)
-              </li>
-            </ul>
+                <span className="text-lg font-semibold">Estimation d'arrivée temps réel (ETA)</span>
+              </div>
+            </div>
           </div>
-          <div className="relative rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-white/10 group bg-slate-900 aspect-video lg:aspect-auto">
+          <div className="relative rounded-[2.5rem] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 group aspect-video">
             <Image 
               src="https://picsum.photos/seed/mapdark/1200/800" 
               alt="Interface Carte" 
               fill
-              className="object-cover grayscale opacity-40 group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000"
+              className="object-cover grayscale opacity-40 group-hover:scale-110 transition-transform duration-1000"
               data-ai-hint="dark map"
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="bg-primary/90 backdrop-blur-xl px-4 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl border border-white/20 flex items-center gap-3 md:gap-4 shadow-2xl animate-pulse mx-4">
-                <MapPin className="w-5 h-5 md:w-6 md:h-6 text-accent" />
-                <span className="text-[10px] md:text-sm font-bold uppercase tracking-widest text-center">VOTRE ANGE EST EN ROUTE</span>
+            <div className="absolute inset-0 flex items-center justify-center p-6">
+              <div className="bg-[#0a111a]/90 backdrop-blur-2xl px-8 py-6 rounded-3xl border border-white/20 flex items-center gap-4 shadow-2xl animate-pulse">
+                <div className="w-4 h-4 bg-accent rounded-full animate-ping" />
+                <span className="text-sm font-bold uppercase tracking-[0.2em]">Votre Ange est en route</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Forms Sections - Refined for all screens */}
-      <section id="rejoindre" className="py-20 md:py-32 bg-slate-50 section-animate">
+      {/* Forms */}
+      <section id="rejoindre" className="py-24 bg-slate-50 section-animate">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12 md:mb-16 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary">Devenez un Ange</h2>
-            <p className="text-muted-foreground text-base md:text-lg px-4">Contribuez activement à la sécurité de votre région.</p>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-[#0a111a]">Devenez un Ange</h2>
+            <p className="text-slate-500 text-xl font-medium">Contribuez activement à la sécurité routière.</p>
           </div>
-          <Card className="border-none shadow-2xl rounded-[1.5rem] md:rounded-3xl overflow-hidden bg-white">
-            <CardContent className="p-6 md:p-16 space-y-6 md:space-y-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Prénom & Nom</label>
-                  <Input placeholder="Jean Dupont" className="h-14 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-accent/20 transition-all" />
+          <Card className="border-none shadow-2xl rounded-[2.5rem] overflow-hidden bg-white">
+            <CardContent className="p-8 md:p-16 space-y-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-3">
+                  <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Prénom & Nom</label>
+                  <Input placeholder="Jean Dupont" className="h-16 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-accent/20 transition-all text-lg px-6" />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Code Postal</label>
-                  <Input placeholder="75000" className="h-14 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-accent/20 transition-all" />
+                <div className="space-y-3">
+                  <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Code Postal</label>
+                  <Input placeholder="75000" className="h-16 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-accent/20 transition-all text-lg px-6" />
                 </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-primary/60 uppercase tracking-widest">Pourquoi nous rejoindre ?</label>
-                <Textarea placeholder="Parlez-nous de votre motivation..." className="min-h-[120px] bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-accent/20 transition-all p-4" />
+              <div className="space-y-3">
+                <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Votre Motivation</label>
+                <Textarea placeholder="Pourquoi souhaitez-vous nous rejoindre ?" className="min-h-[160px] bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-accent/20 transition-all p-6 text-lg resize-none" />
               </div>
-              <Button className="w-full h-16 bg-[#0a111a] hover:bg-[#1a2c42] text-white font-bold uppercase tracking-widest rounded-xl text-xs shadow-xl transition-all active:scale-95">
+              <Button className="w-full h-16 bg-[#0a111a] hover:bg-[#1a2c42] text-white font-bold uppercase tracking-[0.2em] rounded-2xl text-xs shadow-xl transition-all active:scale-[0.98]">
                 Déposer ma candidature
               </Button>
             </CardContent>
@@ -253,57 +271,54 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="contact" className="py-20 md:py-32 bg-white border-t border-slate-100 section-animate">
+      <section id="contact" className="py-24 bg-white section-animate">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12 md:mb-16 space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary">Besoin d'un Ange ?</h2>
-            <p className="text-muted-foreground text-base md:text-lg">Réservation immédiate pour un retour serein.</p>
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-[#0a111a]">Besoin d'un Ange ?</h2>
+            <p className="text-slate-500 text-xl">Réservation immédiate pour un retour serein.</p>
           </div>
-          <div className="bg-[#0a111a] rounded-[2rem] md:rounded-[3rem] p-6 md:p-20 shadow-2xl relative overflow-hidden group">
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8 relative z-10">
-              <div className="space-y-4">
-                <Input placeholder="Nom Complet" className="h-16 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-xl focus:bg-white/10" />
-                <Input placeholder="Lieu de récupération" className="h-16 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-xl focus:bg-white/10" />
+          <div className="bg-[#0a111a] rounded-[3rem] p-8 md:p-20 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/10 to-transparent" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 relative z-10">
+              <div className="space-y-6">
+                <Input placeholder="Nom Complet" className="h-16 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-2xl focus:bg-white/10 text-lg px-6" />
+                <Input placeholder="Lieu de récupération" className="h-16 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-2xl focus:bg-white/10 text-lg px-6" />
               </div>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="relative">
-                  <Input type="text" placeholder="23:30" className="h-16 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-xl pr-16 focus:bg-white/10" />
-                  <div className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 text-[10px] font-bold uppercase tracking-tighter">Heure</div>
+                  <Input type="text" placeholder="Heure souhaitée (ex: 23:30)" className="h-16 bg-white/5 border-white/10 text-white placeholder:text-slate-500 rounded-2xl focus:bg-white/10 text-lg px-6" />
                 </div>
-                <Button size="lg" className="w-full h-16 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-xl transition-all active:scale-95">
+                <Button size="lg" className="w-full h-16 bg-accent hover:bg-accent/90 text-white font-bold rounded-2xl shadow-2xl uppercase tracking-[0.2em] text-xs transition-all active:scale-[0.98]">
                   Confirmer la demande
                 </Button>
               </div>
             </div>
-            <p className="text-center text-slate-500 text-[10px] md:text-xs tracking-widest uppercase">Service disponible 24/7 pour votre sécurité</p>
+            <p className="text-center text-slate-500 text-[10px] tracking-[0.3em] uppercase relative z-10">Service disponible 24/7 pour votre sécurité</p>
           </div>
         </div>
       </section>
 
-      {/* Footer - Complet et Responsive */}
-      <footer className="bg-[#0a111a] text-white py-16 md:py-20 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-10 md:space-y-12">
-          <div className="flex items-center gap-3">
-            <div className="bg-accent p-2 rounded-xl">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-xl md:text-2xl font-bold uppercase tracking-tighter">AngelWatch</span>
+      {/* Footer */}
+      <footer className="bg-[#0a111a] text-white py-20 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-12">
+          <div className="flex flex-col items-center gap-4">
+             <AngelLogo className="w-16 h-16 text-accent" />
+             <span className="text-2xl font-bold uppercase tracking-tighter">AngelWatch</span>
           </div>
-          <nav className="flex flex-wrap justify-center gap-x-8 md:gap-x-12 gap-y-4">
+          <nav className="flex flex-wrap justify-center gap-x-12 gap-y-4">
             {navLinks.map((link) => (
-              <Link key={link.name} href={link.href} className="text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors">{link.name}</Link>
+              <Link key={link.name} href={link.href} className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-colors">{link.name}</Link>
             ))}
-            <Link href="/auth" className="text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Connexion</Link>
+            <Link href="/auth" className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-colors">Connexion</Link>
           </nav>
-          <div className="flex gap-6 md:gap-8">
-            <Link href="#" className="p-3 md:p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Twitter className="w-5 h-5" /></Link>
-            <Link href="#" className="p-3 md:p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Instagram className="w-5 h-5" /></Link>
-            <Link href="#" className="p-3 md:p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Linkedin className="w-5 h-5" /></Link>
+          <div className="flex gap-8">
+            <Link href="#" className="p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Twitter className="w-6 h-6" /></Link>
+            <Link href="#" className="p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Instagram className="w-6 h-6" /></Link>
+            <Link href="#" className="p-4 bg-white/5 rounded-2xl hover:bg-accent hover:text-white transition-all duration-300"><Linkedin className="w-6 h-6" /></Link>
           </div>
-          <div className="text-center space-y-2 px-4">
-            <p className="text-slate-500 text-[9px] md:text-xs tracking-widest uppercase">© 2024 AngelWatch Initiative. Tous droits réservés.</p>
-            <p className="text-slate-600 text-[9px] md:text-[10px]">La sécurité routière est l'affaire de tous. Conduisez avec prudence.</p>
+          <div className="text-center space-y-3">
+            <p className="text-slate-500 text-[10px] tracking-[0.2em] uppercase">© 2024 AngelWatch Initiative. Tous droits réservés.</p>
+            <p className="text-slate-600 text-[10px]">La sécurité routière est l'affaire de tous. Conduisez avec prudence.</p>
           </div>
         </div>
       </footer>
