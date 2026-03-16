@@ -1,4 +1,3 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import {Toaster} from "@/components/ui/toaster";
@@ -7,7 +6,6 @@ import {FirebaseClientProvider} from "@/firebase/client-provider";
 export const metadata: Metadata = {
   title: 'AngelWatch | La sécurité routière, notre engagement',
   description: 'Professionnels du rapatriement de véhicules et accompagnement sécurisé.',
-  manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
