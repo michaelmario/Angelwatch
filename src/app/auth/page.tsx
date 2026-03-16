@@ -35,6 +35,24 @@ export default function AuthPage() {
   const [password, setPassword] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
 
+  const redirectBasedOnRole = async (uid: string, defaultRole: string) => {
+    const userDoc = await getDoc(doc(db, 'users', uid));
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      if (userData.role === 'admin') {
+        router.push('/admin');
+        return;
+      }
+      if (userData.role === 'driver') {
+        router.push('/driver');
+        return;
+      }
+      router.push('/dashboard');
+    } else {
+      router.push(defaultRole === 'driver' ? '/driver' : '/dashboard');
+    }
+  };
+
   const handleAuth = async (role: 'client' | 'driver') => {
     if (!email || !password) {
       toast({
@@ -49,7 +67,6 @@ export default function AuthPage() {
     try {
       if (isRegistering) {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        // Initialiser le profil utilisateur dans Firestore
         await setDoc(doc(db, 'users', userCredential.user.uid), {
           id: userCredential.user.uid,
           name: email.split('@')[0],
@@ -57,20 +74,19 @@ export default function AuthPage() {
           role: role,
           createdAt: new Date().toISOString()
         });
-
         toast({
           title: "Compte créé !",
           description: `Bienvenue chez AngelWatch en tant que ${role === 'client' ? 'Client' : 'Chauffeur'}.`,
         });
+        router.push(role === 'client' ? '/dashboard' : '/driver');
       } else {
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         toast({
           title: "Connexion réussie",
           description: "Ravi de vous revoir parmi nous.",
         });
+        await redirectBasedOnRole(userCredential.user.uid, role);
       }
-      
-      router.push(role === 'client' ? '/dashboard' : '/driver');
     } catch (error: any) {
       let message = "Une erreur est survenue lors de l'authentification.";
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
@@ -95,13 +111,11 @@ export default function AuthPage() {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
-      // Vérifier si l'utilisateur existe déjà dans Firestore
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
       
       if (!userDoc.exists()) {
-        // Nouvel utilisateur via Google
-        await setDoc(doc(db, 'users', user.uid), {
+        await setDoc(userDocRef, {
           id: user.uid,
           name: user.displayName || 'Utilisateur Google',
           email: user.email,
@@ -109,14 +123,15 @@ export default function AuthPage() {
           avatar: user.photoURL,
           createdAt: new Date().toISOString()
         });
+        router.push(role === 'client' ? '/dashboard' : '/driver');
+      } else {
+        await redirectBasedOnRole(user.uid, role);
       }
 
       toast({
         title: "Connexion Google réussie",
         description: `Content de vous voir, ${user.displayName}.`,
       });
-      
-      router.push(role === 'client' ? '/dashboard' : '/driver');
     } catch (error: any) {
       console.error(error);
       toast({
