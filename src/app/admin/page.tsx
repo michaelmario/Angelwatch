@@ -50,7 +50,7 @@ import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
 
 export default function AdminDashboard() {
-  const { db } = useFirestore();
+  const db = useFirestore();
   const { user: authUser, loading: authLoading } = useUser();
   const { toast } = useToast();
   
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
   const handleDeleteUser = (id: string, name: string) => {
     if (confirm(`Êtes-vous sûr de vouloir supprimer ${name} ?`)) {
       setIsDeleting(id);
-      const userRef = doc(db, 'users', id);
+      const userRef = doc(db, 'id', id);
       deleteDoc(userRef)
         .then(() => {
           toast({ title: "Utilisateur supprimé", description: `${name} a été retiré de la base de données.` });

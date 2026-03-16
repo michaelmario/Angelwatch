@@ -21,7 +21,7 @@ export default function LandingPage() {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   
-  const { db } = useFirestore();
+  const db = useFirestore();
   const { user: authUser } = useUser();
   const profileRef = authUser ? doc(db, 'users', authUser.uid) : null;
   const { data: userProfile } = useDoc<UserProfile>(profileRef);
