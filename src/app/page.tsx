@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -118,9 +117,6 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative hero-gradient min-h-screen flex flex-col items-center justify-center text-center px-6">
         <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-10 duration-1000">
-          <div className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-widest">
-            Engagement Officiel & Sécurité Routière
-          </div>
           <div className="flex flex-col items-center gap-6">
              {logoData && (
                <Image 
