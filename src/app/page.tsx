@@ -10,22 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Shield, Mic, Ban, Handshake, MapPin, Navigation, Twitter, Linkedin, Instagram, Menu, ChevronRight } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const AngelLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    {/* Aile Gauche */}
-    <path d="M35 20C20 10 5 15 2 25C10 24 25 25 35 20Z" fill="currentColor" />
-    <path d="M32 23C20 16 8 20 5 28C15 27 25 28 32 23Z" fill="currentColor" opacity="0.7" />
-    <path d="M29 26C20 22 12 25 10 31C18 30 25 31 29 26Z" fill="currentColor" opacity="0.4" />
-    {/* Aile Droite */}
-    <path d="M65 20C80 10 95 15 98 25C90 24 75 25 65 20Z" fill="currentColor" />
-    <path d="M68 23C80 16 92 20 95 28C85 27 75 28 68 23Z" fill="currentColor" opacity="0.7" />
-    <path d="M71 26C80 22 88 25 90 31C82 30 75 31 71 26Z" fill="currentColor" opacity="0.4" />
-    {/* Centre (Bouclier/Moto) */}
-    <path d="M50 12L56 18V28L50 34L44 28V18L50 12Z" fill="currentColor" />
-    <circle cx="50" cy="23" r="3" fill="white" fillOpacity="0.2" />
-  </svg>
-);
+const logoData = PlaceHolderImages.find(img => img.id === 'angelwatch-logo');
 
 export default function LandingPage() {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -67,8 +54,17 @@ export default function LandingPage() {
       {/* Header */}
       <header className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 transition-all duration-300 ${isScrolled ? 'bg-[#0a111a]/95 backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <AngelLogo className="w-12 h-12 text-accent group-hover:scale-110 transition-transform" />
+          <Link href="/" className="flex items-center gap-3 group">
+            {logoData && (
+              <Image 
+                src={logoData.imageUrl} 
+                alt="AngelWatch Logo" 
+                width={48} 
+                height={48} 
+                className="rounded-xl group-hover:scale-110 transition-transform"
+                data-ai-hint={logoData.imageHint}
+              />
+            )}
             <span className="text-xl font-extrabold text-white tracking-tighter uppercase">AngelWatch</span>
           </Link>
 
@@ -125,8 +121,17 @@ export default function LandingPage() {
           <div className="inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-widest">
             Engagement Officiel & Sécurité Routière
           </div>
-          <div className="flex flex-col items-center gap-4">
-             <AngelLogo className="w-24 h-24 md:w-32 md:h-32 text-white" />
+          <div className="flex flex-col items-center gap-6">
+             {logoData && (
+               <Image 
+                 src={logoData.imageUrl} 
+                 alt="AngelWatch Main Logo" 
+                 width={120} 
+                 height={120} 
+                 className="rounded-3xl shadow-2xl"
+                 data-ai-hint={logoData.imageHint}
+               />
+             )}
              <h1 className="text-4xl sm:text-5xl md:text-8xl font-extrabold text-white leading-tight tracking-tighter">
               AngelWatch
             </h1>
@@ -302,7 +307,16 @@ export default function LandingPage() {
       <footer className="bg-[#0a111a] text-white py-20 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-12">
           <div className="flex flex-col items-center gap-4">
-             <AngelLogo className="w-16 h-16 text-accent" />
+             {logoData && (
+               <Image 
+                 src={logoData.imageUrl} 
+                 alt="AngelWatch Logo Footer" 
+                 width={64} 
+                 height={64} 
+                 className="rounded-2xl"
+                 data-ai-hint={logoData.imageHint}
+               />
+             )}
              <span className="text-2xl font-bold uppercase tracking-tighter">AngelWatch</span>
           </div>
           <nav className="flex flex-wrap justify-center gap-x-12 gap-y-4">

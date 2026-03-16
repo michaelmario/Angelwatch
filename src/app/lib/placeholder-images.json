@@ -24,6 +24,12 @@
       "description": "A clean modern map interface",
       "imageUrl": "https://picsum.photos/seed/map/800/600",
       "imageHint": "city map"
+    },
+    {
+      "id": "angelwatch-logo",
+      "description": "Official AngelWatch Logo with wings and shield",
+      "imageUrl": "https://picsum.photos/seed/angelwatch-logo/400/400",
+      "imageHint": "wings logo"
     }
   ]
 }

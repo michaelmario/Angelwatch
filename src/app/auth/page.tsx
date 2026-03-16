@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, ArrowRight, Loader2, ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,14 +13,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const AngelLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M35 20C20 10 5 15 2 25C10 24 25 25 35 20Z" fill="currentColor" />
-    <path d="M65 20C80 10 95 15 98 25C90 24 75 25 65 20Z" fill="currentColor" />
-    <path d="M50 12L56 18V28L50 34L44 28V18L50 12Z" fill="currentColor" />
-  </svg>
-);
+const logoData = PlaceHolderImages.find(img => img.id === 'angelwatch-logo');
 
 export default function AuthPage() {
   const { auth } = useAuth();
@@ -79,7 +75,16 @@ export default function AuthPage() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-6 bg-slate-50 min-h-screen">
       <Link href="/" className="flex items-center gap-3 mb-10 group">
-        <AngelLogo className="w-16 h-16 text-[#0a111a] group-hover:scale-110 transition-transform" />
+        {logoData && (
+          <Image 
+            src={logoData.imageUrl} 
+            alt="AngelWatch Logo" 
+            width={64} 
+            height={64} 
+            className="rounded-2xl group-hover:rotate-12 transition-transform shadow-lg"
+            data-ai-hint={logoData.imageHint}
+          />
+        )}
         <span className="text-2xl font-black text-[#0a111a] tracking-tighter uppercase">AngelWatch</span>
       </Link>
 
