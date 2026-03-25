@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { AlertCircle, RefreshCw, Home } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const logoData = PlaceHolderImages.find(img => img.id === 'angelwatch-logo');
+
 
 export default function Error({
   error,
@@ -29,16 +29,13 @@ export default function Error({
       
       <div className="relative z-10 space-y-10 animate-in fade-in slide-in-from-bottom-10 duration-700">
         <div className="flex flex-col items-center gap-8">
-          {logoData && (
-            <Image 
-              src={logoData.imageUrl} 
-              alt="AngelWatch Logo" 
-              width={100} 
-              height={100} 
-              className="rounded-3xl border border-white/10"
-              data-ai-hint={logoData.imageHint}
-            />
-          )}
+          <Image 
+            src="/icons/icon-256x256.png" 
+            alt="AngelWatch Logo" 
+            width={100} 
+            height={100} 
+            className="rounded-3xl border border-white/10"
+          />
           <div className="bg-yellow-500/10 p-5 rounded-3xl border border-yellow-500/20">
             <AlertCircle className="w-14 h-14 text-yellow-500" />
           </div>

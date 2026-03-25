@@ -1,31 +1,25 @@
-import { MetadataRoute } from 'next'
-
-/**
- * @fileOverview Génère dynamiquement le manifest de la PWA pour AngelWatch.
- * L'utilisation d'une route dynamique aide à résoudre les problèmes de CORS 
- * dans certains environnements de développement.
- */
+import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'AngelWatch',
     short_name: 'AngelWatch',
-    description: 'La sécurité routière, notre engagement. Professionnels du rapatriement de véhicules.',
+    description: 'Sécurité routière et raccompagnement à La Réunion',
     start_url: '/',
     display: 'standalone',
-    background_color: '#0a111a',
-    theme_color: '#0a111a',
+    background_color: '#EBF1F4',
+    theme_color: '#2D598F',
     icons: [
       {
-        src: 'https://picsum.photos/seed/angelwatch-logo/192/192',
+        src: '/icon-192.png',
         sizes: '192x192',
         type: 'image/png',
       },
       {
-        src: 'https://picsum.photos/seed/angelwatch-logo/512/512',
+        src: '/icon-512.png',
         sizes: '512x512',
         type: 'image/png',
       },
     ],
-  }
+  };
 }

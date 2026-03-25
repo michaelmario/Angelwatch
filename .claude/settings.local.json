@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find src:*)",
+      "Bash(find F:/AngelWatch/Angelwatch/src -name *.tsx -type f)",
+      "Bash(find F:/AngelWatch/Angelwatch/src/ai -name *.ts -type f)",
+      "Bash(find F:AngelWatchAngelwatch -maxdepth 2 -name *.rules -o -name firestore.rules -o -name firebase.json)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { ShieldAlert, Home, ChevronLeft } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const logoData = PlaceHolderImages.find(img => img.id === 'angelwatch-logo');
+
 
 export default function NotFound() {
   return (
@@ -19,16 +19,13 @@ export default function NotFound() {
 
       <div className="relative z-10 space-y-10 animate-in fade-in zoom-in duration-700">
         <div className="flex flex-col items-center gap-8">
-          {logoData && (
-            <Image 
-              src={logoData.imageUrl} 
-              alt="AngelWatch Logo" 
-              width={120} 
-              height={120} 
-              className="rounded-[2.5rem] shadow-2xl animate-pulse-subtle border border-white/10"
-              data-ai-hint={logoData.imageHint}
-            />
-          )}
+          <Image 
+            src="/icons/icon-256x256.png" 
+            alt="AngelWatch Logo" 
+            width={120} 
+            height={120} 
+            className="rounded-[2.5rem] shadow-2xl animate-pulse-subtle border border-white/10"
+          />
           <div className="bg-red-500/10 p-5 rounded-3xl border border-red-500/20 backdrop-blur-sm">
             <ShieldAlert className="w-14 h-14 text-red-500" />
           </div>

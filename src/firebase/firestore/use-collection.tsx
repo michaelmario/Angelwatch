@@ -11,7 +11,7 @@ import {
 import { errorEmitter } from '../error-emitter';
 import { FirestorePermissionError } from '../errors';
 
-export function useCollection<T = DocumentData>(query: Query<T> | null) {
+export function useCollection<T = DocumentData>(query: Query<any> | null) {
   const [data, setData] = useState<T[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<FirestoreError | null>(null);
@@ -25,7 +25,7 @@ export function useCollection<T = DocumentData>(query: Query<T> | null) {
     setLoading(true);
     const unsubscribe = onSnapshot(
       query,
-      (snapshot: QuerySnapshot<T>) => {
+      (snapshot: QuerySnapshot<any>) => {
         const items = snapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,

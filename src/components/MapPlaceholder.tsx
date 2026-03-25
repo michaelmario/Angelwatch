@@ -1,82 +1,98 @@
-
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { MapPin, Navigation, User } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import React from 'react';
+import { Navigation, MapPin } from 'lucide-react';
+import { LiveMap } from './LiveMap';
+import { Location, ServiceRequest } from '@/lib/types';
 
-interface MapPlaceholderProps {
-  drivers: { id: string; name: string; lat: number; lng: number }[];
-  clientLocation?: { lat: number; lng: number };
+interface Driver {
+  id: string;
+  name: string;
+  location: Location;
+  rating?: number;
+  trips?: number;
+  avatar?: string;
 }
 
-export function MapPlaceholder({ drivers, clientLocation = { lat: 48.8566, lng: 2.3522 } }: MapPlaceholderProps) {
-  // Simple simulation of coordinate movement for visual effect
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+interface MapPlaceholderProps {
+  drivers?: Driver[];
+  activeRequest?: ServiceRequest | null;
+  height?: number;
+  showDriverRoute?: boolean;
+}
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setOffset(prev => ({
-        x: prev.x + (Math.random() - 0.5) * 0.001,
-        y: prev.y + (Math.random() - 0.5) * 0.001
-      }));
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+export function MapPlaceholder({ drivers = [], activeRequest = null, height = 240, showDriverRoute = false }: MapPlaceholderProps) {
+  const hasApiKey = !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-  return (
-    <Card className="relative w-full h-[400px] bg-slate-100 overflow-hidden border-2 border-primary/10 rounded-xl">
-      {/* Background "Map" Grid */}
-      <div 
-        className="absolute inset-0 opacity-20 pointer-events-none" 
-        style={{ 
-          backgroundImage: 'radial-gradient(#2D598F 1px, transparent 0)', 
-          backgroundSize: '40px 40px' 
-        }} 
+  // Use real map if API key is available, otherwise use placeholder
+  if (hasApiKey) {
+    return (
+      <LiveMap
+        drivers={drivers}
+        activeRequest={activeRequest}
+        height={height}
+        showDriverRoute={showDriverRoute}
       />
-      
-      <div className="absolute inset-0 flex items-center justify-center">
-        {/* Client Pin */}
-        <div className="relative z-10">
-          <div className="absolute -top-10 -left-5 bg-white px-2 py-1 rounded shadow-md text-xs font-bold whitespace-nowrap">
-            You
+    );
+  }
+
+  // Fallback: Static Google Maps embed with driver pin overlays
+  return (
+    <div className="relative w-full rounded-2xl overflow-hidden border border-slate-100 shadow-md" style={{ height }}>
+      {/* Embedded Google Maps – La Réunion, France (no API key needed for basic embed) */}
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d119278.73768703014!2d55.56!3d-21.11!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1710000000000!5m2!1sfr!2sfr"
+        width="100%"
+        height="100%"
+        style={{ border: 0, filter: 'grayscale(20%)' }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="AngelWatch carte"
+      />
+
+      {/* Driver pin overlays */}
+      {drivers.map((driver, i) => (
+        <div
+          key={driver.id}
+          className="absolute z-10 flex flex-col items-center"
+          style={{
+            top: `${28 + i * 22}%`,
+            left: `${38 + i * 18}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <div className="bg-accent text-white rounded-full p-1.5 shadow-lg border-2 border-white animate-bounce">
+            <Navigation className="w-3 h-3" />
           </div>
-          <div className="w-4 h-4 bg-accent rounded-full border-2 border-white shadow-lg animate-pulse" />
+          <div className="bg-white text-[#0a111a] text-[9px] font-bold px-2 py-0.5 rounded-full shadow mt-0.5 whitespace-nowrap border border-slate-100">
+            {driver.name.split(' ')[0]}
+          </div>
         </div>
+      ))}
 
-        {/* Driver Pins */}
-        {drivers.map((driver, i) => {
-          const xOffset = (i * 80) - 100 + (offset.x * 1000);
-          const yOffset = (i * 60) - 80 + (offset.y * 1000);
-          
-          return (
-            <div 
-              key={driver.id} 
-              className="absolute transition-all duration-1000 ease-in-out"
-              style={{ transform: `translate(${xOffset}px, ${yOffset}px)` }}
-            >
-              <div className="flex flex-col items-center">
-                <div className="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full mb-1 shadow-sm font-medium">
-                  {driver.name}
-                </div>
-                <Navigation className="w-6 h-6 text-primary fill-primary rotate-45" />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="absolute bottom-4 right-4 space-y-2">
-        <button className="bg-white p-2 rounded-full shadow-lg border hover:bg-slate-50">
-          <User className="w-5 h-5 text-slate-600" />
-        </button>
-      </div>
-
-      <div className="absolute top-4 left-4">
-        <div className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-semibold text-primary shadow-sm border border-primary/20">
-          Live Tracking Enabled
+      {/* Active request pulse */}
+      {activeRequest && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+          <div className="bg-[#0a111a]/90 backdrop-blur-sm px-4 py-2 rounded-2xl border border-white/20 flex items-center gap-2 shadow-xl">
+            <span className="w-2 h-2 bg-accent rounded-full animate-ping" />
+            <span className="text-white text-[10px] font-bold uppercase tracking-widest">Votre Ange est en route</span>
+          </div>
         </div>
+      )}
+
+      {/* Drivers count badge */}
+      {drivers.length > 0 && (
+        <div className="absolute top-3 right-3 z-10 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full shadow text-[10px] font-bold text-slate-600 flex items-center gap-1 border border-slate-100">
+          <MapPin className="w-3 h-3 text-accent" />
+          {drivers.length} Ange{drivers.length > 1 ? 's' : ''} disponible{drivers.length > 1 ? 's' : ''}
+        </div>
+      )}
+
+      {/* API key missing notice */}
+      <div className="absolute top-3 left-3 z-10 bg-amber-100/90 backdrop-blur-sm px-2 py-1 rounded text-[9px] font-medium text-amber-700">
+        Mode démo – Ajoutez NEXT_PUBLIC_GOOGLE_MAPS_API_KEY pour la carte réelle
       </div>
-    </Card>
+    </div>
   );
 }
